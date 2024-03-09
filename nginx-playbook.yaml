@@ -1,0 +1,22 @@
+---
+- hosts: localhost
+  become: true
+  tasks:
+    - name: Ensure Docker is installed
+      package:
+        name: docker
+        state: present
+
+    - name: Pull Nginx image
+      docker_image:
+        name: nginx:latest
+        state: present
+
+    - name: Start Nginx container
+      docker_container:
+        name: my_nginx
+        image: nginx:latest
+        ports:
+          - "80:80"
+        restart: always
+
